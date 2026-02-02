@@ -1,0 +1,153 @@
+:root {
+  --pink1:#ffd8ff; --pink2:#f2a9ff; --pink3:#d66de0;
+  --purple1:#e8d4ff; --purple2:#c49fff; --purple3:#8f53d6;
+  --yellow1:#fff7c7; --yellow2:#ffe27a; --yellow3:#d8b32b;
+
+  --center:#ffcf5b;
+  --stem:#2f7b4c;
+  --leaf:#3b955d;
+
+  --bg1:#1b1024;
+  --bg2:#251733;
+}
+
+/* Genel */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:#f7efff;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  font-family:sans-serif;
+}
+
+h1{font-size:20px}
+
+.scene{
+  width:340px;
+  height:340px;
+  position:relative;
+}
+.bouquet{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:end;
+  gap:20px;
+}
+
+/* Çiçek genel */
+.chrysanthemum{
+  width:150px;
+  height:150px;
+  position:relative;
+  cursor:pointer;
+}
+
+/* Renk Paletleri */
+.chrysanthemum[data-color="pink"] .petal-inner{
+  background:linear-gradient(180deg,var(--pink1),var(--pink2),var(--pink3));
+}
+.chrysanthemum[data-color="purple"] .petal-inner{
+  background:linear-gradient(180deg,var(--purple1),var(--purple2),var(--purple3));
+}
+.chrysanthemum[data-color="yellow"] .petal-inner{
+  background:linear-gradient(180deg,var(--yellow1),var(--yellow2),var(--yellow3));
+}
+
+/* Merkez */
+.center{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:radial-gradient(circle,#fff7d6,var(--center));
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  z-index:5;
+}
+
+/* Petal */
+.petal{
+  position:absolute;
+  width:100%;height:100%;
+  transform:rotate(calc(var(--i)*15deg));
+  transform-origin:50% 50%;
+}
+.petal-inner{
+  width:22px;
+  height:95px;
+  border-radius:999px;
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-80%) scale(0.05);
+  opacity:0;
+}
+
+/* Sap + Daha düzgün yaprak */
+.stem{
+  width:10px;
+  height:140px;
+  background:linear-gradient(#4ba26a,var(--stem));
+  position:absolute;
+  left:50%;
+  top:55%;
+  transform:translateX(-50%);
+  border-radius:999px;
+}
+
+.leaf{
+  width:70px;
+  height:110px;
+  position:absolute;
+  top:60%;
+  background:linear-gradient(135deg,#9be3aa,var(--leaf));
+  border-radius:70% 25% 70% 25%;
+  opacity:0;
+}
+.leaf-left{
+  left:50%;
+  transform:translateX(-100%) rotate(10deg) scale(0.4);
+}
+.leaf-right{
+  left:50%;
+  transform:translateX(0%) rotate(-10deg) scale(0.4);
+}
+
+/* Animasyon */
+.chrysanthemum.bloom .petal-inner{
+  animation:bloom .7s forwards;
+  animation-delay:calc(var(--i)*0.03s);
+}
+@keyframes bloom{
+  0%{ transform:translate(-50%,-80%) scale(0.05); opacity:0; }
+  70%{ opacity:1; }
+  100%{ transform:translate(-50%,-80%) scale(1); opacity:1; }
+}
+
+.chrysanthemum.bloom .leaf-left{
+  animation:lfL .7s .2s forwards;
+}
+.chrysanthemum.bloom .leaf-right{
+  animation:lfR .7s .23s forwards;
+}
+@keyframes lfL{
+  to{opacity:1; transform:translateX(-100%) rotate(0) scale(1);}
+}
+@keyframes lfR{
+  to{opacity:1; transform:translateX(0%) rotate(0) scale(1);}
+}
+
+.chrysanthemum.spin{
+  animation:spin 10s linear infinite;
+}
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
